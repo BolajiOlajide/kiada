@@ -69,3 +69,31 @@ Constraint the amount of lines of logs to display with the command:
 ```sh
 kubectl logs <pod_name> --tail=10
 ```
+
+## Accessing files in containers
+
+Some applications store their logs in a file instead of the `stdout` or `stderr`, you can access them with kubernetes in two ways:
+
+* Copying the file from the running container into your local machine
+
+```sh
+kubectl cp kiada:html/index.html /tmp/index.html
+```
+
+The above comand copies the file `/html/index.html` from the pod named `kiada`  to the `/tmp/index.html` file on your computer.
+You can edit this file, and then copy it back into the container with the same command but switching the source and destination:
+
+```sh
+kubectl cp /tmp/index.html kiada:html/index.html
+```
+
+The `kubectl cp` command requires the `tar` binary to be present in your container.
+
+* Executing commands in running containers
+
+You can invoke a command in a running container with `kubectl`.
+
+```sh
+kubectl exec kiada -- ps aux
+kubectl exec kiada -- bash
+```
