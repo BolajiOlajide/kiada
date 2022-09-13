@@ -13,3 +13,11 @@ spec:
     ports:
     - containerPort: 8080
       name: http
+
+  - name: envoy
+    image: cooproton12/kiada-ssl-proxy:0.1
+    ports:
+    - name: https
+      containerPort: 8443
+    - name: http
+      containerPort: 9901

@@ -122,3 +122,23 @@ rl.on('line', function (line) {
     }
 });
 ```
+
+### Multiple containers in a pod
+
+When running multiple containers in a pod, you sometimes want to **Portforward across multiple ports**. The command to do that is listed below:
+
+```sh
+kubectl port-forward kiada 8080 8443 9901
+```
+
+To get the logs of a specific container in the pod, you'll use the container:
+
+```sh
+kubectl logs kiada -c envoy
+```
+
+### Init containers
+
+A pod manifest can specify a list of containers to run when the pod starts and before the pod's normal containers are started. These containers are intended to initialize the pod and are appropriately called `init containers`. Init containers run one after the other and must all finish successfully before the main containers of the pod are started.
+
+They're like the pod's regular containers, but they don't run in parallel - only one init container runs at a time.
