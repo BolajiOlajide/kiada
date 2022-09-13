@@ -97,3 +97,7 @@ You can invoke a command in a running container with `kubectl`.
 kubectl exec kiada -- ps aux
 kubectl exec kiada -- bash
 ```
+
+### Ephemeral containers
+
+To keep images small and improve security in the container, most containers used in production don't contain any binary files other than those required for the containers primary process. This significantly reduces the attack surfae, but also means that you can't run shells or other tools in production containers. Fortunately, a new Kubernetes feature called [`Ephemeral Containers`](https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/) allows you to debug running containers by attaching a debug container to them.
