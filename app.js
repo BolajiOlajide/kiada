@@ -1,9 +1,12 @@
 const http = require('http');
 const os = require('os');
 const fs = require('fs');
+const readline = require('readline');
 
-const version = "0.1";
+const version = "0.3";
 const listenPort = 8080;
+
+let statusMessage = "";
 
 function sendResponse(status, contentType, encoding, body, response) {
     response.writeHead(status, {'Content-Type': contentType});
@@ -18,6 +21,7 @@ function renderFile(req, res, path, contentType) {
         "{{hostname}}": os.hostname(),
         "{{clientIP}}": req.connection.remoteAddress,
         "{{version}}": version,
+        "{{statusMessage}}": statusMessage ? (statusMessage + "\n") : "",
     });
 
     let body = template.replace(
@@ -80,3 +84,18 @@ console.log("Listening on port " + listenPort);
 
 let server = http.createServer(handler);
 server.listen(listenPort);
+
+let rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+});
+
+rl.on('line', function (line) {
+    if (line.trim() === "") {
+        console.error("Enter new status message and press ENTER.");
+    } else {
+        statusMessage = line;
+        console.log("Status message set to: " + line);
+    }
+});

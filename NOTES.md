@@ -101,3 +101,24 @@ kubectl exec kiada -- bash
 ### Ephemeral containers
 
 To keep images small and improve security in the container, most containers used in production don't contain any binary files other than those required for the containers primary process. This significantly reduces the attack surfae, but also means that you can't run shells or other tools in production containers. Fortunately, a new Kubernetes feature called [`Ephemeral Containers`](https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/) allows you to debug running containers by attaching a debug container to them.
+
+### Attaching to the Application's Standard input
+
+You can use the `kubectl attach -i <pod_name>` command to interact with the container's standard input. We added this line in our nodejs project to handle this in code:
+
+```js
+let rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+});
+
+rl.on('line', function (line) {
+    if (line.trim() === "") {
+        console.error("Enter new status message and press ENTER.");
+    } else {
+        statusMessage = line;
+        console.log("Status message set to: " + line);
+    }
+});
+```

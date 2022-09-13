@@ -7,7 +7,9 @@ metadata:
 spec:
   containers:
   - name: kiada
-    image: cooproton12/kiada:0.2
+    image: cooproton12/kiada:0.3
+    imagePullPolicy: Always
+    stdin: true
     ports:
     - containerPort: 8080
       name: http
