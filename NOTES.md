@@ -36,3 +36,36 @@ This is the easiest way to talk to applications running in a pod. The command al
 ```sh
 kubectl port-forward kiada 8080
 ```
+
+## Logs
+
+You can view logs by using the command:
+
+```sh
+kubectl logs <pod_name>
+```
+
+Stream them with the command:
+
+```sh
+kubectl logs -f <pod_name>
+```
+
+View their timestamps with the command:
+
+```sh
+kubectl logs <pod_name> --timestamps
+```
+
+View recent logs (for example in the last 2 minutes) with the command:
+
+```sh
+kubectl logs <pod_name> --since=2m
+kubectl logs <pod_name> --since-time=2020-02-01T09:50:00Z
+```
+
+Constraint the amount of lines of logs to display with the command:
+
+```sh
+kubectl logs <pod_name> --tail=10
+```
